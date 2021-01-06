@@ -91,4 +91,30 @@ class Tree
         
     end
 
+
+    def delete(value, root = @root) #in progress
+        if !root
+            return nil
+
+        elsif value < root.value
+            root.left = delete(value, root.left)
+
+        elsif value > root.value
+            root.right = delete(value, root.right)
+
+        else
+
+            if !root.left
+                temp = root.right
+                root = nil
+                return temp
+
+            elsif !root.right
+                temp = root.left
+                root = nil
+                return temp
+
+            
+    end
+
 end
