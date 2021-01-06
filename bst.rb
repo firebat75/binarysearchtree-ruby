@@ -65,78 +65,30 @@ class Tree
     end
 
 
-    def pretty_print(node = @root, prefix = '', is_left = true)
-        pretty_print(node.right, "#{prefix}#{is_left ? '│   ' : '    '}", false) if node.right
+    def pp(node = @root, prefix = '', is_left = true)
+        pp(node.right, "#{prefix}#{is_left ? '│   ' : '    '}", false) if node.right
         puts "#{prefix}#{is_left ? '└── ' : '┌── '}#{node.value}"
-        pretty_print(node.left, "#{prefix}#{is_left ? '    ' : '│   '}", true) if node.left
+        pp(node.left, "#{prefix}#{is_left ? '    ' : '│   '}", true) if node.left
     end
 
 
-    def insert(value, root = @root) #in progress
-        node = Node.new(value)
-
+    def insert(value, root = @root)
         if !root
-            root = node
+            root = Node.new(value)
+            return root
 
-        elsif value < root.value
-            if root > root.left
-                node.left = root.left
-                root.left = node
-            else
-                root.insert(value, root.left)
+        else
+            if value < root.value
+                root.left = insert(value, root.left)
+            
+            elsif value > root.value
+                root.right = insert(value, root.right)
             end
+        
+        return root
 
-        elsif value > root
-            if root < root.right
-                node.right = root.right
-                root.right = node
-            else
-                root.insert(value, root.right)
-            end
         end
-        @root = root
-        return node
         
     end
+
 end
-    
-
-#     def delete(value, root = @root, parent = nil)
-
-#         if root.value > value #traverse left
-#             delete(value, root.left, root)
-#         elsif root.value < value #traverse right
-#             delete(value, root.right, root)
-#         else
-
-#             if !root.left && !root.right #node to be deleted is a leaf
-#                 parent.left, parent.right = nil, nil
-
-#             elsif root.left && !root.right #node to be deleted has one child (left)
-#                 parent.left = root.left if parent.left == root
-#                 parent.right = root.left if parent.right == root
-
-#             elsif root.right && !root.left #node to be deleted has one child (right)
-#                 parent.right = root.right if parent.right == root
-#                 parent.left = root.right if parent.left == root
-
-#             else #node to be deleted has two children
-#                 min_right = root.right
-#                 while min_right.left
-#                     min_right_p = min_right
-#                     min_right = min_right.left
-#                 end
-
-#                 root.value = min_right.value
-
-#                 if !min_right.right
-#                     min_right_p.left = nil
-#                 else
-#                     min_right_p.right = min_right.right
-                    
-#                 end
-#             end
-
-#         end
-#     end
-# end
