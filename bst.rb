@@ -142,4 +142,20 @@ class Tree
 
     end
 
+    def find(value, root = @root)
+        if !root
+            return nil
+
+        elsif value == root.value
+            return root
+
+        elsif value < root.value
+            return find(value, root.left)
+
+        elsif value > root.value
+            return find(value, root.right)
+        end
+    end
+
+
 end
