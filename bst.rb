@@ -93,6 +93,21 @@ class Tree
 
 
     def delete(value, root = @root) #in progress
+
+        def findmin(root) #helper function
+            #finds the smallest node in tree and deletes it
+            current = root
+
+            while current.left
+                current = current.left
+            end
+
+            output = current
+            current = nil
+
+            return output
+        end
+
         if !root
             return nil
 
@@ -113,8 +128,18 @@ class Tree
                 temp = root.left
                 root = nil
                 return temp
+            end
+        
 
-            
+            temp = findmin(root.right)
+
+            root.value = temp.value
+
+            root.right = delete(temp.value, root.right)
+        end
+
+        return root
+
     end
 
 end
